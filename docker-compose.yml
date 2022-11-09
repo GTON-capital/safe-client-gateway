@@ -11,6 +11,8 @@ services:
       - ./nginx/templates:/etc/nginx/templates
     depends_on:
       - web
+    networks:
+      - safenetwork
 
   web:
     build: .
@@ -18,6 +20,8 @@ services:
       - .env
     depends_on:
       - redis
+    networks:
+      - safenetwork
 
   redis:
     image: redis:6-alpine
@@ -25,3 +29,9 @@ services:
       - .env
     ports:
       - "${REDIS_PORT}:${REDIS_PORT}"
+    networks:
+      - safenetwork
+
+networks:
+  safenetwork:
+    name: safe_network
